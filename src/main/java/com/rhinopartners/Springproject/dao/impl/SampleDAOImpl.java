@@ -21,6 +21,7 @@ public class SampleDAOImpl implements SampleDAO {
     public String create(Sample sample) {
         
         try {
+
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydatabase", "postgres", "psql");
             PreparedStatement stm = 
                 connection.prepareStatement("INSERT INTO sample_one (id, reference, amount, create_as, feedback) VALUES (?, ?, ?, ?, ?)");
@@ -29,14 +30,21 @@ public class SampleDAOImpl implements SampleDAO {
             stm.setInt(3, sample.getAmount());
             stm.setString(4, sample.getCreateAs());
             stm.setString(5, sample.getFeedback());
+            int affectedRows = stm.executeUpdate();
+
+            //todo: generate a http response for successful event
+
+            return "saved sample" + affectedRows;
 
         } catch (SQLException e) {
-            System.out.println("Can not connect to the database");
-            e.printStackTrace();
+
+            System.out.println("Can not connect to the database" + e.toString());
+
+            //todo: generate a http response for failed event
+
+            return "failed to save sample";
         }
         
-        
-        return "saved sample";
     }
 
     @Override
