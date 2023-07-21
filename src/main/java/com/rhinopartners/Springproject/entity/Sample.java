@@ -14,5 +14,5 @@ public class Sample {
     String reference;
     int amount;
     String createAs;
-    String Feedback;    
+    String feedback;    
 }
