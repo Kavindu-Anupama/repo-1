@@ -1,15 +1,11 @@
 package com.rhinopartners.Springproject.dao;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.rhinopartners.Springproject.entity.Sample;
 
-public interface SampleDAO {
+@Repository
+public interface SampleDAO extends JpaRepository<Sample, Integer> {
     
-    String create(Sample sample);
-    List<Sample> read();
-    String update(Sample sample);
-    String delete(int id);
-        
-
 }
