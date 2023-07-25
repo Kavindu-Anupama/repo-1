@@ -2,12 +2,14 @@ package com.rhinopartners.Springproject.service.impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.rhinopartners.Springproject.dto.SampleDTO;
+import com.rhinopartners.Springproject.entity.Sample;
 import com.rhinopartners.Springproject.repository.SampleRepository;
 import com.rhinopartners.Springproject.service.SampleService;
 
@@ -16,9 +18,11 @@ import com.rhinopartners.Springproject.service.SampleService;
 public class SampleServiceImpl implements SampleService {
 
     private final SampleRepository sampleRepository;
+    private final ModelMapper mapper;
 
-    public SampleServiceImpl(SampleRepository sampleRepository){
+    public SampleServiceImpl(SampleRepository sampleRepository, ModelMapper mapper){
         this.sampleRepository=sampleRepository;
+        this.mapper=mapper;
         // to initialize sampleRepository constant in the begining
     }
 
@@ -28,7 +32,7 @@ public class SampleServiceImpl implements SampleService {
             System.out.println("Failed to save. giver id already exists.");
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Sample already exists.");
         }
-
+        sampleRepository.save(mapper.map(sample, Sample.class));
     }
 
     @Override
