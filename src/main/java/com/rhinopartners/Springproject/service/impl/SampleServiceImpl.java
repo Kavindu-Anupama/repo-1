@@ -1,6 +1,6 @@
 package com.rhinopartners.Springproject.service.impl;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -29,35 +29,37 @@ public class SampleServiceImpl implements SampleService {
     @Override
     public void saveSample(SampleDTO sample) {
         if (sampleRepository.existsById(sample.getId())) {
-            System.out.println("Failed to save. giver id already exists.");
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Sample already exists.");
+            System.out.println("Failed to save. given id already exists.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Can not Save. Sample already exists.");
         }
         sampleRepository.save(mapper.map(sample, Sample.class));
     }
 
     @Override
     public void updateSample(SampleDTO sample) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateSample'");
+        if (!sampleRepository.existsById(sample.getId())) {
+            System.out.println("Failed to update. given id does not exist.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sample can not be found.");
+        }
+        sampleRepository.save(mapper.map(sample, Sample.class));
     }
 
     @Override
     public void deleteSample(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteSample'");
+        if (!sampleRepository.existsById(id)) {
+            System.out.println("can not delete. sample id does not exist.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can not delete. Sample id does not exist.");
+        }
+        sampleRepository.deleteById(id);
     }
 
     @Override
     public SampleDTO getSample(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSample'");
+        if (!sampleRepository.existsById(id)){
+            System.out.println("can not fetch. sample id does not exist.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can not find the Sample. Given id does not exist.");
+        }
+        Optional<Sample> sample = sampleRepository.findById(id);
+        return mapper.map(sample, SampleDTO.class);
     }
-
-    @Override
-    public List<SampleDTO> findSample(String query) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findSample'");
-    }
-    
-    
 }
