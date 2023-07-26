@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.rhinopartners.Springproject.entity.Sample;
 
-public interface SampleRepository extends CrudRepository<Sample, Integer> {
+public interface SampleRepository extends JpaRepository<Sample, Integer> {
     
 }
