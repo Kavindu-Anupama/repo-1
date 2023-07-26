@@ -33,6 +33,7 @@ public class HttpControllerReq {
         sampleService.saveSample(sampleDTO);
     }
 
+    @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/{id}")
     public SampleDTO read(@PathVariable int id) {
         return sampleService.getSample(id);
@@ -43,8 +44,9 @@ public class HttpControllerReq {
         return "update working";
     }
 
-    @DeleteMapping
-    public String delete() {
-        return "delete working";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        sampleService.deleteSample(id);
     }
 }
