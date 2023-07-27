@@ -63,7 +63,11 @@ public class SampleServiceImpl implements SampleService {
         // get by using jpa
         Optional<Sample> sample = sampleRepository.findById(id);
         System.out.println("retrieving some data from database entity object : " + sample.get().getReference());
+
+
         SampleDTO sampleDTO = mapper.map(sample, SampleDTO.class);
+
+        
         return sampleDTO;
     }
 }
