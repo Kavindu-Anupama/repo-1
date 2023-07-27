@@ -59,7 +59,13 @@ public class SampleServiceImpl implements SampleService {
             System.out.println("can not fetch. sample id does not exist.");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Can not find the Sample. Given id does not exist.");
         }
+        
+        // get by using jpa
         Optional<Sample> sample = sampleRepository.findById(id);
-        return mapper.map(sample, SampleDTO.class);
+        System.out.println("retrieving some data from database entity object : " + sample.get().getReference());
+        SampleDTO sampleDTO = mapper.map(sample, SampleDTO.class);
+        return sampleDTO;
     }
 }
+
+

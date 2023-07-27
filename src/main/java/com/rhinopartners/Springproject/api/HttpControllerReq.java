@@ -38,9 +38,17 @@ public class HttpControllerReq {
         return "read working";
     }
 
+<<<<<<< Updated upstream
     @PatchMapping
     public String update() {
         return "update working";
+=======
+    @ResponseStatus(HttpStatus.CREATED)
+    @PatchMapping(value = "/{id}", consumes = "application/json")
+    public void update(@PathVariable int id, @RequestBody @Validated SampleDTO sampleDTO) {
+        sampleDTO.setId(id);
+        sampleService.updateSample(sampleDTO);
+>>>>>>> Stashed changes
     }
 
     @DeleteMapping
