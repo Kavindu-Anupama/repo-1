@@ -18,11 +18,11 @@ import com.rhinopartners.Springproject.service.SampleService;
 public class SampleServiceImpl implements SampleService {
 
     private final SampleRepository sampleRepository;
-    private final ModelMapper mapper;
+    private final ModelMapper modelMapper;
 
-    public SampleServiceImpl(SampleRepository sampleRepository, ModelMapper mapper){
+    public SampleServiceImpl(SampleRepository sampleRepository, ModelMapper modelMapper){
         this.sampleRepository=sampleRepository;
-        this.mapper=mapper;
+        this.modelMapper=modelMapper;
         // to initialize sampleRepository constant in the begining
     }
 
@@ -32,7 +32,7 @@ public class SampleServiceImpl implements SampleService {
             System.out.println("Failed to save. given id already exists.");
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Can not Save. Sample already exists.");
         }
-        sampleRepository.save(mapper.map(sample, Sample.class));
+        sampleRepository.save(modelMapper.map(sample, Sample.class));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class SampleServiceImpl implements SampleService {
             System.out.println("Failed to update. given id does not exist.");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sample can not be found.");
         }
-        sampleRepository.save(mapper.map(sample, Sample.class));
+        sampleRepository.save(modelMapper.map(sample, Sample.class));
     }
 
     @Override
@@ -65,10 +65,10 @@ public class SampleServiceImpl implements SampleService {
         System.out.println("retrieving some data from database entity object : " + sampleEntity.get().getReference());
 
 
-        SampleDTO sampleDTO = mapper.map(sampleEntity.get().getClass() , SampleDTO.class);
+        SampleDTO sampleDTO = modelMapper.map(sampleEntity.get().getClass() , SampleDTO.class);
 
 
-        return sampleDTO;
+        return sampleDTO; 
     }
 }
 
