@@ -40,7 +40,7 @@ public class HttpControllerReq {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PatchMapping(value = "/(id)", consumes = "application/json")
+    @PatchMapping(value = "/{id}", consumes = "application/json")
     public void update(@PathVariable int id, @RequestBody @Validated SampleDTO sampleDTO) {
         sampleDTO.setId(id);
         sampleService.updateSample(sampleDTO);

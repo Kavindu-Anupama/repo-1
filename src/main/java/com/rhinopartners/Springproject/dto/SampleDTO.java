@@ -1,7 +1,8 @@
 package com.rhinopartners.Springproject.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import java.io.Serializable;
+
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,15 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SampleDTO {
-    @NotBlank(message = "id can not be empty")
-    @Pattern(regexp = "^[0-9]+$", message = "Invalid id")
+public class SampleDTO implements Serializable {
+    @NotNull(message = "id can not be empty")
     private int id;
     @NotBlank(message = "Reference can not be empty")
     @Pattern(regexp = "^[A-Za-z ]+$", message = "Invalid reference name")
     private String reference;
-    @NotBlank(message = "Amount can not be empty")
-    @Pattern(regexp = "^[0-9]+$", message = "Invalid amount")
+    @NotNull(message = "Amount can not be empty")
     private int amount;
     @NotBlank(message = "Created name can not be empty")
     @Pattern(regexp = "^[A-Za-z ]+$", message = "Invalid created name")
