@@ -61,15 +61,12 @@ public class SampleServiceImpl implements SampleService {
         }
         
         // get by using jpa
-        Optional<Sample> sampleEntity = sampleRepository.findById(id);
-        System.out.println("retrieving some data from database entity object : " + sampleEntity.get().getReference());
+        // Optional<Sample> sampleEntity = sampleRepository.findById(id);
+        // System.out.println("retrieving some data from database entity object : " + sampleEntity.get().getReference());
 
+        // SampleDTO sampleDTO = modelMapper.map(sampleEntity.get().getClass() , SampleDTO.class);
 
-        SampleDTO sampleDTO = modelMapper.map(sampleEntity.get().getClass() , SampleDTO.class);
-
-
-        return sampleDTO; 
+        return sampleRepository.findById(id)
+        .map(sampleEntity -> modelMapper.map(sampleEntity, SampleDTO.class)).orElseThrow(); 
     }
-}
-
-
+}     
