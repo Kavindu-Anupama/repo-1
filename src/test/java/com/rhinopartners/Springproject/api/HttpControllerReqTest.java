@@ -27,7 +27,6 @@ import com.rhinopartners.Springproject.service.SampleService;
 
 import jakarta.servlet.ServletContext;
 
-
 @WebMvcTest(HttpControllerReq.class)
 public class HttpControllerReqTest {
 
@@ -42,36 +41,39 @@ public class HttpControllerReqTest {
 
     @Test
     void givenSampleObject_whenCreateSample_thenReturn201() throws Exception {
-        
-        //given - precondition
-        SampleDTO sampleDTO = SampleDTO.builder()
-                                .id(5)
-                                .reference("myTest")
-                                .amount(10)
-                                .createAs("aTest")
-                                .feedback("test went good")
-                                .build();
-        
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                                        .post("/").contentType(MediaType.APPLICATION_JSON)
-                                        .content(objectMapper.writeValueAsString(sampleDTO));
-                                        // Builds a MockHttpServletRequest.
 
-        //when - action
-        ResultActions resultActions = mockMvc.perform(requestBuilder);
-        //Allows applying actions, such as expectations, on the result of an executed request.
-             
-        //then - varification
-        resultActions.andExpect(status);
-        
-        
-        
+        // //given - precondition
+        SampleDTO sampleDTO = SampleDTO.builder()
+                .id(5)
+                .reference("myTest")
+                .amount(10)
+                .createAs("aTest")
+                .feedback("test went good")
+                .build();
+
+        mockMvc.perform(post("/"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasErrors("sampleDTO"));
+
+        // RequestBuilder requestBuilder = MockMvcRequestBuilders
+        // .post("/").contentType(MediaType.APPLICATION_JSON)
+        // .content(objectMapper.writeValueAsString(sampleDTO));
+        // Builds a MockHttpServletRequest.
+
+        // when - action
+        // ResultActions resultActions = mockMvc.perform(requestBuilder);
+        // Allows applying actions, such as expectations, on the result of an executed
+        // request.
+
+        // then - varification
+        // resultActions.andExpect();
+
     }
 
     @Test
-    void givenSampleId_whenDeleteSample_thenReturn204() throws Exception{
+    void givenSampleId_whenDeleteSample_thenReturn204() throws Exception {
 
-        //given - preconditions
+        // given - preconditions
         int sampleId = 5;
         given(sampleService).deleteSample(sampleId);
     }
