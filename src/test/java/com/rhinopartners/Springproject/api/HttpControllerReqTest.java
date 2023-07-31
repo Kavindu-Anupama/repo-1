@@ -5,6 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,8 +18,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rhinopartners.Springproject.dto.SampleDTO;
 import com.rhinopartners.Springproject.service.SampleService;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(HttpControllerReq.class)
 public class HttpControllerReqTest {
 
@@ -42,16 +45,17 @@ public class HttpControllerReqTest {
                 .feedback("test went good")
                 .build();
         given(sampleService.saveSample(any(SampleDTO.class)))
-                .willAnswer((invocation)-> invocation.getArgument(0));
+                .willAnswer((invocation) -> invocation.getArgument(0));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-        .post("/").contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(sampleDTO));
+                .post("/").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(sampleDTO));
         // Builds a MockHttpServletRequest.
 
         // when - action
         ResultActions resultActions = mockMvc.perform(requestBuilder);
-        // Allows applying actions, such as expectations, on the result of an executed request.
+        // Allows applying actions, such as expectations, on the result of an executed
+        // request.
 
         // then - varification
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
@@ -61,7 +65,6 @@ public class HttpControllerReqTest {
     @Test
     void givenSampleId_whenDeleteSample_thenReturn204() throws Exception {
 
-        
     }
 
     @Test
