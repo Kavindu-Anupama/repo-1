@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.http.client.MockClientHttpRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -40,7 +41,7 @@ public class HttpControllerReqTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void givenSampleObject_whenCreateSample_thenReturnSavedSample() throws Exception {
+    void givenSampleObject_whenCreateSample_thenReturn201() throws Exception {
         
         //given - precondition
         SampleDTO sampleDTO = SampleDTO.builder()
@@ -50,6 +51,7 @@ public class HttpControllerReqTest {
                                 .createAs("aTest")
                                 .feedback("test went good")
                                 .build();
+        
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                                         .post("/").contentType(MediaType.APPLICATION_JSON)
                                         .content(objectMapper.writeValueAsString(sampleDTO));
@@ -58,17 +60,20 @@ public class HttpControllerReqTest {
         //when - action
         ResultActions resultActions = mockMvc.perform(requestBuilder);
         //Allows applying actions, such as expectations, on the result of an executed request.
-        
+             
         //then - varification
-        ResultMatcher matcher;
-        resultActions.andExpect(status().isOk())
+        resultActions.andExpect(status);
+        
         
         
     }
 
     @Test
-    void testDelete() {
+    void givenSampleId_whenDeleteSample_thenReturn204() throws Exception{
 
+        //given - preconditions
+        int sampleId = 5;
+        given(sampleService).deleteSample(sampleId);
     }
 
     @Test
