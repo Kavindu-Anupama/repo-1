@@ -1,5 +1,7 @@
 package com.rhinopartners.Springproject.repository;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,15 @@ public class SampleRepositoryTest {
 		sample.setFeedback("updated");
 		Sample updatedSample = sampleRepository.save(sample);
 		Assertions.assertThat(updatedSample.getFeedback()).isEqualTo("updated");
+	}
+
+	@Test
+	public void deleteSampleTest() {
+		Sample sample = sampleRepository.findById(5).get();
+		sampleRepository.delete(sample);
+		Sample sample2 = null;
+		Optional<Sample> optionalSample = sampleRepository.findById(5);
+		if (optionalSample.isPresent()) sample2 = optionalSample.get();
+		Assertions.assertThat(sample2).isNull();
 	}
 }
