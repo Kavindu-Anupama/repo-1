@@ -31,6 +31,11 @@ public class SampleRepositoryTest {
 		sampleRepository.save(sample);
 
 		Assertions.assertThat(sample.getId()).isEqualTo(5);
+	}
 
+	@Test
+	public void getSampleTest() {
+		Sample sample = sampleRepository.findById(5).get();
+		Assertions.assertThat(sample.getId()).isEqualTo(5);
 	}
 }
