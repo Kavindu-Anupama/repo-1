@@ -38,4 +38,12 @@ public class SampleRepositoryTest {
 		Sample sample = sampleRepository.findById(5).get();
 		Assertions.assertThat(sample.getId()).isEqualTo(5);
 	}
+
+	@Test
+	public void updateSampleTest() {
+		Sample sample = sampleRepository.findById(5).get();
+		sample.setFeedback("updated");
+		Sample updatedSample = sampleRepository.save(sample);
+		Assertions.assertThat(updatedSample.getFeedback()).isEqualTo("updated");
+	}
 }
