@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhinopartners.Springproject.dto.SampleDTO;
+import com.rhinopartners.Springproject.service.SampleService;
 import com.rhinopartners.Springproject.service.impl.SampleServiceImpl;
 
 @RestController
@@ -21,34 +22,34 @@ import com.rhinopartners.Springproject.service.impl.SampleServiceImpl;
 @RequestMapping("api/v1/app")
 public class HttpControllerReq {
 
-    private final SampleServiceImpl sampleServiceImpl;
+    private final SampleService sampleService;
 
-    public HttpControllerReq(SampleServiceImpl sampleServiceImpl) {
-        this.sampleServiceImpl=sampleServiceImpl;
+    public HttpControllerReq(SampleService sampleService) {
+        this.sampleService=sampleService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)  //201
     @PostMapping(consumes = "application/json")
     public void addSample(@RequestBody @Validated SampleDTO sampleDTO) {
-        sampleServiceImpl.saveSample(sampleDTO);
+        sampleService.saveSample(sampleDTO);
     }
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/{id}")
     public SampleDTO read(@PathVariable int id) {
-        return sampleServiceImpl.getSample(id);
+        return sampleService.getSample(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PatchMapping(value = "/{id}", consumes = "application/json")
     public void update(@PathVariable int id, @RequestBody @Validated SampleDTO sampleDTO) {
         sampleDTO.setId(id);
-        sampleServiceImpl.updateSample(sampleDTO);
+        sampleService.updateSample(sampleDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
-        sampleServiceImpl.deleteSample(id);
+        sampleService.deleteSample(id);
     }
 }
